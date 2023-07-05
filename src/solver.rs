@@ -3,7 +3,7 @@ use crate::models::{CostMatrix, Node, TspProblem};
 use rand::thread_rng;
 use rand::seq::SliceRandom;
 
-pub fn find_best_tour(problem: &TspProblem, num_iterations: u32) -> Vec<Node> {
+pub fn find_best_tour(problem: &TspProblem, num_iterations: usize) -> Vec<Node> {
     let best_tour = (0..num_iterations)
         .map(|i| {
             println!("Starting iteration {i}");
@@ -21,11 +21,11 @@ fn shuffle(nodes: &[Node]) -> Vec<Node> {
     a
 }
 
-pub fn calc_cost(tour: &Vec<Node>, cost_matrix: &CostMatrix) -> u32 {
+pub fn calc_cost(tour: &Vec<Node>, cost_matrix: &CostMatrix) -> usize {
     let costs = (1..tour.len())
         .map(|i| cost_matrix.find_cost(tour[i-1].id, tour[i].id));
 
     let final_edge_cost = cost_matrix.find_cost( tour.last().unwrap().id, tour.first().unwrap().id);
 
-    costs.sum::<u32>() + final_edge_cost
+    costs.sum::<usize>() + final_edge_cost
 }

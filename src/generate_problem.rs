@@ -4,7 +4,7 @@ use std::path::Path;
 use rand::Rng;
 use crate::models::{CostMatrix, Node, TspProblem};
 
-pub fn create_random_problem(num_nodes: u32, path: &Path) -> TspProblem {
+pub fn create_random_problem(num_nodes: usize, path: &Path) -> TspProblem {
     write_file(num_nodes, path);
     let nodes = (0..num_nodes).map(|id| Node { id }).collect();
     let cost_matrix = CostMatrix::from_file(path);
@@ -14,7 +14,7 @@ pub fn create_random_problem(num_nodes: u32, path: &Path) -> TspProblem {
     }
 }
 
-fn write_file(num_nodes: u32, path: &Path) {
+fn write_file(num_nodes: usize, path: &Path) {
     let file = OpenOptions::new()
         .write(true)
         .truncate(true)

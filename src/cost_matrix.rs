@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::io::BufRead;
 use std::path::Path;
 use crate::models::{CostMatrix, Edge};
@@ -8,34 +7,35 @@ impl CostMatrix {
         let file = std::fs::File::open(path).unwrap();
         let reader = std::io::BufReader::new(file);
 
-        let mut cost_map = HashMap::new();
-
         let edges = reader.lines()
             .skip(1)
             .map(|line| parse_line(line.unwrap()));
 
+        let mut cost_vec = Vec::new();
+        println!("Growing vector");
         for edge in edges {
-            let pair = (edge.origin_id, edge.destination_id);
-            cost_map.insert(pair, edge.cost);
+            if edge.origin_id >= cost_vec.len() {
+                cost_vec.insert(edge.origin_id, Vec::new());
+            }
+            cost_vec[edge.origin_id].insert(edge.destination_id, edge.cost);
         }
+        println!("Vector grown");
 
         CostMatrix {
-            cost_map
+            cost_vec
         }
     }
 
-    pub fn find_cost(&self, origin_id: u32, destination_id: u32) -> u32 {
-        let pair = (origin_id, destination_id);
-        let cost = self.cost_map.get(&pair);
-        *cost.unwrap()
+    pub fn find_cost(&self, origin_id: usize, destination_id: usize) -> usize {
+        self.cost_vec[origin_id][destination_id]
     }
 }
 
 fn parse_line(line: String) -> Edge {
     let parts: Vec<&str> = line.split(',').collect();
     Edge {
-        origin_id: parts[0].trim().parse::<u32>().unwrap(),
-        destination_id: parts[1].trim().parse::<u32>().unwrap(),
-        cost: parts[2].trim().parse::<u32>().unwrap(),
+        origin_id: parts[0].trim().parse::<usize>().unwrap(),
+        destination_id: parts[1].trim().parse::<usize>().unwrap(),
+        cost: parts[2].trim().parse::<usize>().unwrap(),
     }
 }

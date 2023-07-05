@@ -1,19 +1,18 @@
-use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
 pub struct Node {
-    pub id: u32,
+    pub id: usize,
 }
 
 #[derive(Debug, Clone)]
 pub struct Edge {
-    pub origin_id: u32,
-    pub destination_id: u32,
-    pub cost: u32,
+    pub origin_id: usize,
+    pub destination_id: usize,
+    pub cost: usize,
 }
 
 pub struct CostMatrix {
-    pub cost_map: HashMap<(u32, u32), u32>
+    pub cost_vec: Vec<Vec<usize>>
 }
 
 pub struct TspProblem {
