@@ -2,11 +2,16 @@ use std::fs::{OpenOptions};
 use std::io::{BufWriter, Write};
 use std::path::Path;
 use rand::Rng;
-use crate::models::{Node};
+use crate::models::{CostMatrix, Node, TspProblem};
 
-pub fn create_random_problem(num_nodes: u32, path: &Path) -> Vec<Node> {
+pub fn create_random_problem(num_nodes: u32, path: &Path) -> TspProblem {
     write_file(num_nodes, path);
-    (0..num_nodes).map(|id| Node { id }).collect()
+    let nodes = (0..num_nodes).map(|id| Node { id }).collect();
+    let cost_matrix = CostMatrix::from_file(path);
+    TspProblem {
+        nodes,
+        cost_matrix
+    }
 }
 
 fn write_file(num_nodes: u32, path: &Path) {
