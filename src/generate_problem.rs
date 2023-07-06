@@ -23,15 +23,15 @@ fn write_file(num_nodes: usize, path: &Path) {
         .unwrap();
     let mut writer = BufWriter::new(file);
     let mut rng = rand::thread_rng();
-    writeln!(writer, "origin, destination, cost").unwrap();
     for i in 0..num_nodes {
         for j in 0..num_nodes {
             if i == j {
-                writeln!(writer, "{i}, {j}, 0").unwrap();
+                write!(writer, "00").unwrap();
             } else {
-                writeln!(writer, "{i}, {j}, {}", rng.gen_range(10..100)).unwrap();
+                write!(writer, "{}", rng.gen_range(10..100)).unwrap();
             }
         }
+        writeln!(writer).unwrap();
     }
     writer.flush().unwrap();
 }

@@ -1,5 +1,4 @@
 use std::collections::HashSet;
-use itertools::Itertools;
 use rand::rngs::ThreadRng;
 use crate::models::{CostMatrix, Edge, Node, TourChange, TspProblem};
 
@@ -15,7 +14,7 @@ pub fn find_best_tour(problem: &TspProblem, num_iterations: usize) -> Vec<Node> 
         let cost_delta = calc_cost_delta(&mut current_tour, &tour_change, &problem.cost_matrix);
         let new_cost = current_cost + cost_delta;
         if new_cost < current_cost {
-            println!("Found new best cost {new_cost}");
+            println!("Found new best cost {new_cost} at iteration {i}");
             current_cost = new_cost;
             current_tour.swap(tour_change.index_swap[0], tour_change.index_swap[1]);
         }

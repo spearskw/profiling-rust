@@ -10,8 +10,8 @@ use crate::solver::{calc_cost, find_best_tour};
 
 fn main() {
     let path = Path::new("./matrix.txt");
-    let problem = create_random_problem(1000, path);
-    let best_tour = find_best_tour(&problem, 1000000);
+    let problem = create_random_problem(10_000, path);
+    let best_tour = find_best_tour(&problem, 10_000_000);
     let best_tour_cost = calc_cost(&best_tour, &problem.cost_matrix);
 
     let best_tour_ids: Vec<usize> = best_tour.iter().map(|node| node.id).collect();
