@@ -26,7 +26,7 @@ impl CostMatrix {
         }
     }
 
-    pub fn find_cost(&self, origin_id: usize, destination_id: usize) -> usize {
+    pub fn find_cost(&self, origin_id: usize, destination_id: usize) -> isize {
         self.cost_vec[origin_id][destination_id]
     }
 }
@@ -36,6 +36,6 @@ fn parse_line(line: String) -> Edge {
     Edge {
         origin_id: parts[0].trim().parse::<usize>().unwrap(),
         destination_id: parts[1].trim().parse::<usize>().unwrap(),
-        cost: parts[2].trim().parse::<usize>().unwrap(),
+        cost: parts[2].trim().parse::<isize>().unwrap(),
     }
 }
